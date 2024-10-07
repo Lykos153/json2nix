@@ -63,7 +63,9 @@ instance Show ObjectAttribute where
 showObjectAttr :: Int -> ObjectAttribute -> String
 showObjectAttr i (ObjectAttribute name value) = let
   startsWithDigit = isDigit $ head name
-  newName = if startsWithDigit
+  containsDot = elem '.' name
+  containsSlash = elem '/' name
+  newName = if startsWithDigit || containsDot || containsSlash
     then "\"" ++ name ++ "\""
     else name
   in indentSpace i ++ newName ++ " = " ++ (showAsNix i value) ++ ";"
